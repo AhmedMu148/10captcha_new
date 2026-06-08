@@ -79,7 +79,7 @@
                 <!-- Footer -->
                 <div class="bg-gray-50 px-8 py-4 border-t border-gray-200">
                     <p class="text-xs text-center text-gray-500">
-                        Need help? <a href="{{ route('support') ?? '#' }}" class="text-green-600 hover:text-green-700 font-medium">Contact Support</a>
+                        Need help? <a href="mailto:support@10captcha.com" class="text-green-600 hover:text-green-700 font-medium">Contact Support</a>
                     </p>
                 </div>
             </div>

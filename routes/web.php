@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiPageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CustomImageController;
+use App\Http\Controllers\WalletController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/topup', [PaymentController::class, 'topup'])->name('topup');
     Route::get('/payments', [PaymentController::class, 'history'])->name('payments.history');
     Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+
+    // Wallet routes
+    Route::post('/wallet/process-topup', [WalletController::class, 'processTopUp'])->name('wallet.process-topup');
+    Route::get('/wallet/success', [WalletController::class, 'topUpSuccess'])->name('wallet.success');
 
     Route::get('/custom-images', [CustomImageController::class, 'index'])->name('custom-image.index');
     Route::get('/custom-images/test', [CustomImageController::class, 'testForm'])->name('custom-image.test');

@@ -178,7 +178,7 @@ class AddFundModal extends Component
                 'user_id' => $user->id,
                 'type' => 'payment',
                 'payment_provider' => 'central_payment',
-                'payment_reference' => $response['Payment_hash'] ?? $response['Payment_id'],
+                'payment_reference' => $response['transaction_hash'] ?? $response['transaction_id'] ?? null,
                 'status' => 'pending',
                 'amount' => (float) $amountFormatted,
                 'currency' => $this->currency,

@@ -35,7 +35,7 @@ class WalletController extends Controller
 
         $user = $request->user();
         
-        $amountFormatted = number_format($this->$data['amount'], 2, '.', '');
+        $amountFormatted = number_format($data['amount'], 2, '.', '');
         $currency = strtoupper($data['currency'] ?? 'USD');
 
         try {

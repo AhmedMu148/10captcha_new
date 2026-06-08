@@ -1,0 +1,27 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - img "Register illustration" [ref=e4]
+    - heading "User Access Requested!" [level=3] [ref=e5]
+  - generic [ref=e7]:
+    - link "10Captcha" [ref=e9] [cursor=pointer]:
+      - /url: /
+    - heading "User Register" [level=2] [ref=e10]
+    - paragraph [ref=e11]: create your account it takes only a few moments
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: Name
+        - textbox "Name" [active] [ref=e15]
+      - generic [ref=e16]:
+        - generic [ref=e17]: Email address
+        - textbox "Email address" [ref=e18]
+      - generic [ref=e19]:
+        - generic [ref=e20]: Password
+        - textbox "Password" [ref=e21]
+      - generic [ref=e22]:
+        - generic [ref=e23]: Confirm Password
+        - textbox "Confirm Password" [ref=e24]
+      - button "Sign up" [ref=e25] [cursor=pointer]
+      - paragraph [ref=e26]:
+        - text: Already have account?
+        - link "Sign in" [ref=e27] [cursor=pointer]:
+          - /url: http://10captcha.local/login

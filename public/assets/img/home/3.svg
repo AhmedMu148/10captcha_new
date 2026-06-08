@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="140" height="75" fill-rule="evenodd" clip-rule="evenodd" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 382 204">
+  <defs>
+    <radialGradient id="b" cx="48%" cy="24%" r="50%" fx="48%" fy="24%" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#8ecd0d" />
+      <stop offset="1" stop-color="#228717" />
+    </radialGradient>
+    <radialGradient id="a" cx="50%" cy="22%" r="50%" fx="50%" fy="22%" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#029ade" />
+      <stop offset="1" stop-color="#323c8c" />
+    </radialGradient>
+  </defs>
+  <path fill="#f5f7f9" d="M0 0h382v204H0z" />
+  <path fill="url(#a)" d="M191 179c21 0 37-3 48-17 11-15 12-31 12-48s-5-47-20-67c-15-18-29-22-40-22-10 0-25 4-40 22-15 20-20 50-20 67s1 33 12 48c12 14 28 17 48 17z" />
+  <path fill="#fff" d="M191 166c14 0 25-2 33-12 7-10 8-21 8-32 0-12-4-32-14-45s-20-15-27-15-17 2-27 15-14 33-14 45c0 11 1 22 9 32 7 10 18 12 32 12z" />
+  <path fill="url(#b)" d="M191 159c12 0 21-1 28-10 6-8 7-17 7-27s-3-27-12-38-17-13-23-13-14 2-23 13c-8 11-11 28-11 38s0 19 7 27c6 9 16 10 27 10z" />
+</svg>

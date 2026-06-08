@@ -1,0 +1,27 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - img "Login illustration" [ref=e4]
+    - heading "Welcome Back!" [level=3] [ref=e5]
+  - generic [ref=e7]:
+    - link "10Captcha" [ref=e9] [cursor=pointer]:
+      - /url: /
+    - heading "Sign In" [level=2] [ref=e10]
+    - paragraph [ref=e11]: sign in to your account to continue
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - generic [ref=e14]: Email address
+        - textbox "Email address" [active] [ref=e15]
+      - generic [ref=e16]:
+        - generic [ref=e17]: Password
+        - textbox "Password" [ref=e18]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - checkbox "Remember me" [ref=e21]
+          - generic [ref=e22]: Remember me
+        - link "Forgot password?" [ref=e23] [cursor=pointer]:
+          - /url: http://10captcha.local/forgot-password
+      - button "Sign in" [ref=e24] [cursor=pointer]
+      - paragraph [ref=e25]:
+        - text: Don't have an account?
+        - link "Sign up" [ref=e26] [cursor=pointer]:
+          - /url: http://10captcha.local/register

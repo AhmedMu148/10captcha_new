@@ -1,0 +1,74 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e4]:
+    - link "10captcha" [ref=e5] [cursor=pointer]:
+      - /url: ./
+      - img "10captcha" [ref=e6]
+    - generic [ref=e7]:
+      - list
+      - generic [ref=e8]:
+        - link "LOGIN" [ref=e9] [cursor=pointer]:
+          - /url: https://10captcha.com/login.php?return=topup.php
+        - link "SIGN UP" [ref=e10] [cursor=pointer]:
+          - /url: https://10captcha.com/register.php?return=topup.php
+  - generic [ref=e13]:
+    - link [ref=e15] [cursor=pointer]:
+      - /url: https://10captcha.com/login.php
+      - img [ref=e16]
+    - generic [ref=e17]:
+      - heading "Make Payment" [level=3] [ref=e19]
+      - generic [ref=e20]: "* Pay and get Your Balance with PayPal"
+      - link "TOP UP" [ref=e22] [cursor=pointer]:
+        - /url: https://10captcha.com/login.php
+  - contentinfo [ref=e23]:
+    - generic [ref=e24]:
+      - link "Home" [ref=e25] [cursor=pointer]:
+        - /url: https://10captcha.com/
+      - text: "|"
+      - link "Add Funds" [ref=e26] [cursor=pointer]:
+        - /url: https://10captcha.com/topup.php
+      - text: "|"
+      - link "API Documentation" [ref=e27] [cursor=pointer]:
+        - /url: https://10captcha.com/api-docs.php
+      - text: "|"
+      - link "Custom Image Modules" [ref=e28] [cursor=pointer]:
+        - /url: https://10captcha.com/custom-images.php
+      - text: "|"
+      - link "Terms" [ref=e29] [cursor=pointer]:
+        - /url: https://10captcha.com/tos.php
+      - text: "|"
+      - link "Privacy" [ref=e30] [cursor=pointer]:
+        - /url: https://10captcha.com/privacy-policy.php
+      - text: "|"
+      - link "Partnership" [ref=e31] [cursor=pointer]:
+        - /url: https://10captcha.com/partnership.php
+      - text: "|"
+      - link "Help Center" [ref=e32] [cursor=pointer]:
+        - /url: https://help.10captcha.com/
+      - text: "|"
+      - link "Contact Us" [ref=e33] [cursor=pointer]:
+        - /url: ./ticket-new.php
+      - text: "|"
+      - link "FAQ" [ref=e34] [cursor=pointer]:
+        - /url: https://10captcha.com/faq.php
+    - generic [ref=e35]:
+      - generic [ref=e36]: 
+      - generic [ref=e37]: 
+      - generic [ref=e38]: 
+      - generic [ref=e39]: 
+      - generic [ref=e40]: 
+    - generic [ref=e41]:
+      - text: © 2026 Copyright.
+      - link "10captcha.com" [ref=e42] [cursor=pointer]:
+        - /url: https://10captcha.com/
+    - generic [ref=e43]:
+      - link "" [ref=e44] [cursor=pointer]:
+        - /url: https://www.facebook.com/10Captcha
+        - generic [ref=e45]: 
+      - link "" [ref=e46] [cursor=pointer]:
+        - /url: https://www.instagram.com/10Captcha
+        - generic [ref=e47]: 
+    - generic [ref=e48]:
+      - generic [ref=e49]: 
+      - text: Office number 5, 45th Floor, The One Tower, Sheikh Zayed Road, Dubai, UAE
+  - button "Open chat window" [ref=e50] [cursor=pointer]:
+    - img [ref=e51]

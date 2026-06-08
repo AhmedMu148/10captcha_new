@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('payment_hash')->nullable();
             $table->string('txn')->nullable();
             $table->unsignedBigInteger('amount'); // stored x100000
+            $table->string('currency', 3)->default('USD');
+            $table->string('description')->nullable();
+            $table->json('metadata')->nullable();
             $table->tinyInteger('status')->default(0); // 0=uncompleted, 1=completed, 2=canceled
             $table->timestamps();
 

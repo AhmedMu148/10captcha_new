@@ -14,6 +14,9 @@ class Payment extends Model
         'payment_hash',
         'txn',
         'amount',
+        'currency',
+        'description',
+        'metadata',
         'status',
     ];
 

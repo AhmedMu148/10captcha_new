@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Str;
 
 class TicketSupportController extends Controller
 {
@@ -35,6 +35,11 @@ class TicketSupportController extends Controller
         $callbackUrl = $this->buildSupportUrl($supportDomain, '/auth/callback', ['token' => $token]);
 
         return redirect()->away($callbackUrl);
+    }
+
+    public function handleIntended(Request $request): RedirectResponse
+    {
+        return $this->sso($request);
     }
 
     protected function buildSupportUrl(string $supportDomain, string $path, array $query = []): string

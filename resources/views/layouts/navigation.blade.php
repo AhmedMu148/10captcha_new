@@ -17,7 +17,7 @@
                     </x-nav-link>
 
                     @if(config('services.ticket_system.support_domain'))
-                        <x-nav-link :href="route('support.sso')" :active="request()->routeIs('support.sso')">
+                        <x-nav-link :href="route('ticket.sso.redirect')" :active="request()->routeIs('ticket.sso.*')">
                             {{ __('Support') }}
                         </x-nav-link>
                     @endif
@@ -91,7 +91,7 @@
                 </x-responsive-nav-link>
 
                 @if(config('services.ticket_system.support_domain'))
-                    <x-responsive-nav-link :href="route('support.sso')">
+                    <x-responsive-nav-link :href="route('ticket.sso.redirect')">
                         {{ __('Support') }}
                     </x-responsive-nav-link>
                 @endif

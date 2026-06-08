@@ -136,7 +136,7 @@
                 <hr class="mb-3">
                 <div class="my-3"><a href="{{ url('/') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-home text-xl"></i> Home</a></div>
                 <div class="my-3"><a href="{{ url('/api') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-code text-xl"></i> API KEY</a></div>
-                <div class="my-3"><a href="{{ url('/tickets') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-ticket-alt text-xl"></i> Tickets</a></div>
+                <div class="my-3"><a href="{{ route('ticket.sso.redirect') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-ticket-alt text-xl"></i> Tickets</a></div>
                 <div class="my-3"><a href="{{ url('/reports') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-list text-xl"></i> Reports</a></div>
                 <div class="my-3"><a href="{{ url('/payments') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-comment-dollar text-xl"></i> Payments History</a></div>
                 <div class="my-3"><a href="{{ route('profile.edit') }}" class="flex items-center gap-2 text-gray-700 hover:text-green-600 transition text-sm"><i class="las la-users-cog text-xl"></i> Profile</a></div>

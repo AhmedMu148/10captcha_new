@@ -6,7 +6,7 @@ use App\Services\CentralPaymentIntegrationService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\Payment;
 
 class WalletController extends Controller
 {
@@ -62,9 +62,9 @@ class WalletController extends Controller
 
             // Store pending transaction with initial metadata
             // Note: transaction_hash could be numeric ID or hash string from Central Payment
-            $transaction = Transaction::create([
+            $Payment = Payment::create([
                 'user_id' => $user->id,
-                'type' => 'payment',
+                'gateway' => (! empty($gatewayInfo['name']) ? $gatewayInfo['name'] : 'central_payment'),
                 'payment_provider' => (! empty($gatewayInfo['name']) ? $gatewayInfo['name'] : 'central_payment'),
                 'payment_reference' => $response['transaction_hash'] ?? $response['transaction_id'],
                 'status' => 'pending',

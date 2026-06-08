@@ -40,8 +40,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/custom-images/test-ocr', [CustomImageController::class, 'testOcr'])->name('custom-image.test-ocr');
 
 
+    Route::get('/tickets/sso', [TicketSupportController::class, 'sso'])
+        ->name('ticket.sso.redirect');
 
-    Route::get('/support', [TicketSupportController::class, 'sso'])->name('support.sso');
+    // Ticket SSO: handle intended URL from ticket system.
+    Route::get('/tickets/sso/intended', [TicketSupportController::class, 'handleIntended'])
+        ->name('ticket.sso.intended');
+
 });
 
 require __DIR__.'/auth.php';

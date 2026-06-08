@@ -20,6 +20,10 @@ class Payment extends Model
         'status',
     ];
 
+    protected $casts = [
+        'metadata' => 'array',
+    ];
+
     // status constants
     const STATUS_UNCOMPLETED = 0;
     const STATUS_COMPLETED   = 1;

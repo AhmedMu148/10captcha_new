@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Central Payment API Integration Service
@@ -204,12 +205,12 @@ class CentralPaymentIntegrationService
             $payload['metadata'] = $paymentData['metadata'];
         }
 
-        ActionLogger::info('payment', 'creating_hosted_payment', [
+        Log::info('creating_hosted_payment', [
             'endpoint' => $endpoint,
             'amount' => $payload['amount'],
             'currency' => $payload['currency'],
             'customer_email' => $payload['customer_email'],
-        ], 'payments');
+        ]);
 
         $response = $this->makeAuthenticatedRequest('POST', $endpoint, $payload);
 
@@ -224,9 +225,9 @@ class CentralPaymentIntegrationService
         }
 
         if (! isset($response['transaction_hash']) || ! isset($response['hosted_url'])) {
-            ActionLogger::error('payment', 'invalid_response_from_payment_api', [
+            Log::error('invalid_response_from_payment_api', [
                 'response' => $response,
-            ], 'payments');
+            ]);
             throw new Exception('Invalid response from payment API: missing transaction fields. Response: '.json_encode($response));
         }
 
@@ -274,12 +275,12 @@ class CentralPaymentIntegrationService
             'User-Agent' => 'CentralPaymentIntegration/1.0',
         ];
 
-        ActionLogger::info('integration', 'making_authenticated_api_request', [
+        Log::info('making_authenticated_api_request', [
             'method' => $method,
             'url' => $url,
             'timestamp' => $timestamp,
             'has_body' => ! empty($body),
-        ], 'payments');
+        ]);
 
         try {
             // Make HTTP request
@@ -304,33 +305,33 @@ class CentralPaymentIntegrationService
                 $errorBody = $response->json();
                 $errorMessage = $errorBody['message'] ?? $errorBody['error'] ?? 'Unknown error';
 
-                ActionLogger::error('integration', 'api_request_failed', [
+                Log::error('api_request_failed', [
                     'method' => $method,
                     'url' => $url,
                     'status' => $response->status(),
                     'error' => $errorMessage,
                     'response' => $errorBody,
-                ], 'payments');
+                ]);
 
                 throw new Exception("API request failed ({$response->status()}): {$errorMessage}");
             }
 
             $responseData = $response->json();
 
-            ActionLogger::info('integration', 'api_request_successful', [
+            Log::info('api_request_successful', [
                 'method' => $method,
                 'url' => $url,
                 'status' => $response->status(),
-            ], 'payments');
+            ]);
 
             return $responseData;
 
         } catch (Exception $e) {
-            ActionLogger::error('integration', 'api_request_exception', [
+            Log::error('api_request_exception', [
                 'method' => $method,
                 'url' => $url,
                 'error' => $e->getMessage(),
-            ], 'payments');
+            ]);
             throw $e;
         }
     }

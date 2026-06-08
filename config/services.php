@@ -42,4 +42,13 @@ return [
         'sso_secret' => env('TICKET_SYSTEM_SSO_SECRET'),
     ],
 
+    'central_payment' => [
+        'base_url' => env('CENTRAL_PAYMENT_BASE_URL'),
+        'api_key' => env('CENTRAL_PAYMENT_API_KEY'),
+        'secret_key' => env('CENTRAL_PAYMENT_SECRET_KEY'),
+        'api_version' => env('CENTRAL_PAYMENT_API_VERSION', 'v1'),
+        'timeout' => env('CENTRAL_PAYMENT_TIMEOUT', 30),
+        'verify_ssl' => env('CENTRAL_PAYMENT_VERIFY_SSL', true),
+    ],
+
 ];

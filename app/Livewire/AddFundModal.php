@@ -173,14 +173,20 @@ class AddFundModal extends Component
                 ];
             }
 
+            // Get transaction ID from response (try multiple field names)
+            $transactionId = $response['transaction_hash'] ?? $response['transaction_id'] ?? $response['id'] ?? null;
+            if (!$transactionId) {
+                throw new \Exception('API did not return a transaction ID');
+            }
+
             // Store pending Payment with initial metadata
             Payment::create([
                 'user_id' => $user->id,
-                'type' => 'payment',
+                'gateway' => $gatewayInfo['name'] ?? 'central_payment',
                 'payment_provider' => 'central_payment',
-                'payment_reference' => $response['Payment_hash'] ?? $response['Payment_id'],
-                'status' => 'pending',
-                'amount' => (float) $amountFormatted,
+                'payment_reference' => $transactionId,
+                'status' => 0,  // 0 = uncompleted/pending
+                'amount' => (float) $amountFormatted,  // stored x100000
                 'currency' => $this->currency,
                 'description' => 'Account top-up',
                 'metadata' => [
@@ -199,7 +205,14 @@ class AddFundModal extends Component
             // Close modal and redirect
             $this->reset(['amount', 'requiredAmount', 'reason', 'errorMessage']);
             $this->dispatch('close-modal', 'add-fund-modal');
-            $this->dispatch('redirect-to-payment', url: $response['hosted_url']);
+            
+            // Get hosted URL from response (try multiple field names)
+            $hostedUrl = $response['hosted_url'] ?? $response['checkout_url'] ?? $response['url'] ?? null;
+            if (!$hostedUrl) {
+                throw new \Exception('API did not return a hosted payment URL');
+            }
+            
+            $this->dispatch('redirect-to-payment', url: $hostedUrl);
         } catch (\Exception $e) {
             report($e);
             $this->errorMessage = 'Unable to create payment session. Please try again.';

@@ -34,13 +34,13 @@ class WalletController extends Controller
         ]);
 
         $user = $request->user();
-
-        $amount = (string) number_format((float) $data['amount'], 2, '.', '');
+        
+        $amountFormatted = number_format($this->$data['amount'], 2, '.', '');
         $currency = strtoupper($data['currency'] ?? 'USD');
 
         try {
             $paymentData = [
-                'amount' => $amount,
+                'amount' => $amountFormatted,
                 'currency' => $currency,
                 'description' => 'Account top-up',
                 'customer_email' => $user->email,
@@ -60,33 +60,33 @@ class WalletController extends Controller
                 ];
             }
 
+            // Get transaction ID from response (try multiple field names)
+            $transactionId = $response['transaction_hash'] ?? $response['transaction_id'] ?? $response['id'] ?? null;
+            if (!$transactionId) {
+                throw new \Exception('API did not return a transaction ID');
+            }
+
             // Store pending transaction with initial metadata
             // Note: transaction_hash could be numeric ID or hash string from Central Payment
             $Payment = Payment::create([
                 'user_id' => $user->id,
-                'gateway' => (! empty($gatewayInfo['name']) ? $gatewayInfo['name'] : 'central_payment'),
-                'payment_provider' => (! empty($gatewayInfo['name']) ? $gatewayInfo['name'] : 'central_payment'),
-                'payment_reference' => $response['transaction_hash'] ?? $response['transaction_id'],
-                'status' => 'pending',
-                'amount' => (float) $amount,
-                'currency' => $currency,
-                'description' => 'Account top-up',
-                'metadata' => [
-                    'customer_email' => $user->email,
-                    'payment_method' => $gatewayInfo['name'] ?? 'pending',
-                    'payment_method_label' => $gatewayInfo['display_name'] ?? 'Payment Gateway (Pending)',
-                    'gateway_data' => [
-                        'gateway' => $gatewayInfo,
-                        'payment_method' => $gatewayInfo['name'] ?? null,
-                        'payment_method_label' => $gatewayInfo['display_name'] ?? null,
-                        'status' => 'initialized',
-                    ],
+                'gateway' => $gatewayInfo['name'] ?? 'central_payment',
+                'payment_provider' => 'central_payment',
+                'payment_reference' => $transactionId,
+                'status' => 0,  // 0 = uncompleted/pending
+                'amount' => (float) $amountFormatted,  // stored x100000
                 ],
-            ]);
+            );
 
             
-            // Redirect user to hosted checkout URL (hosted_url is validated in service)
-            return redirect()->away($response['hosted_url']);
+            // Get hosted URL from response (try multiple field names)
+            $hostedUrl = $response['hosted_url'] ?? $response['checkout_url'] ?? $response['url'] ?? null;
+            if (!$hostedUrl) {
+                throw new \Exception('API did not return a hosted payment URL');
+            }
+            
+            // Redirect user to hosted checkout URL
+            return redirect()->away($hostedUrl);
         } catch (\Exception $e) {
             report($e);
 

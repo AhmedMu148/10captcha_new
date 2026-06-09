@@ -1,0 +1,3 @@
+  GET|HEAD  api ........................... api.page GǦ ApiPageController@index
+  GET|HEAD  api-docs ....................... api.docs GǦ ApiPageController@docs
+  POST      api/regenerate ..... api.regenerate GǦ ApiPageController@regenerate

@@ -39,17 +39,17 @@ class CentralPaymentIntegrationService
     /**
      * Central Payment API Configuration
      */
-    private string $baseUrl;
+    private string $baseUrl = '';
 
-    private string $apiVersion;
+    private string $apiVersion = 'v1';
 
-    private string $apiKey;
+    private string $apiKey = '';
 
-    private string $secretKey;
+    private string $secretKey = '';
 
-    private int $timeout;
+    private int $timeout = 30;
 
-    private bool $verifySSL;
+    private bool $verifySSL = true;
 
     public function __construct(
         string $baseUrl,

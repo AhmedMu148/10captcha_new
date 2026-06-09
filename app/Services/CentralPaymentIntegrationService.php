@@ -51,6 +51,22 @@ class CentralPaymentIntegrationService
 
     private bool $verifySSL;
 
+    public function __construct(
+        string $baseUrl,
+        string $apiKey,
+        string $secretKey,
+        string $apiVersion = 'v1',
+        int $timeout = 30,
+        bool $verifySSL = true
+    ) {
+        $this->baseUrl = rtrim($baseUrl, '/');
+        $this->apiKey = $apiKey;
+        $this->secretKey = $secretKey;
+        $this->apiVersion = $apiVersion;
+        $this->timeout = $timeout;
+        $this->verifySSL = $verifySSL;
+    }
+
     /**
      * Webhook event types from Central Payment
      */

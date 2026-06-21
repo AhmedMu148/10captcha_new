@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Services\TicketService;
 
 class TicketSupportController extends Controller
 {
+    public function __construct(
+        private TicketService $ticketService
+    ) {}
+
     public function sso(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -72,5 +77,49 @@ class TicketSupportController extends Controller
     protected function base64UrlEncode(string $data): string
     {
         return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+    }
+
+
+    public function newTicket()
+    {
+        return view('ticket.new');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'category' => 'required|string',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+
+        $user = auth()->user();
+
+        $categoryMap = [
+            'support'        => 77,
+            'general'        => 76,
+            'billing'        => 78,
+            'sales'          => 76,
+            'code'           => 77,
+            'internal'       => 76,
+            'super_internal' => 76,
+        ];
+        $categoryId = $categoryMap[$request->category] ?? 76;
+
+        $result = $this->ticketService->createTicket([
+            'email' => $user->email,
+            'name' => $user->name,
+            'external_user_id' => (string) $user->id,
+            'title' => $request->subject,
+            'description' => $request->message,
+            'priority' => 'low',
+            'category_id' => $categoryId,
+        ]);
+        dd($result);
+        return back()->with(
+            'success',
+            'Ticket #' . $result['data']['ticket']['id'] . ' created successfully.'
+        );
     }
 }

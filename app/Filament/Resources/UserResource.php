@@ -56,13 +56,34 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->searchable()->sortable(),
+                TextColumn::make('id')->searchable()->sortable(),
                 TextColumn::make('email')->searchable()->sortable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->formatStateUsing(fn($state) => match ($state) {
+                        1, '1', 'A', 'Active' => 'Active',
+                        2, '2', 'V', 'Verified' => 'Verified',
+                        3, '3', 'S', 'Suspended' => 'Suspended',
+                        4, '4', 'F', 'Frozen' => 'Frozen',
+                        default => 'Unknown',
+                    })
+                    ->color(fn($state): string => match ($state) {
+                        1, '1', 'A', 'Active' => 'info',
+                        2, '2', 'V', 'Verified' => 'success',
+                        3, '3', 'S', 'Suspended' => 'danger',
+                        4, '4', 'F', 'Frozen' => 'danger',
+                        default => 'danger',
+                    })
+                    ->sortable(),
+                TextColumn::make('bonus')
+                    ->label('T.Bonus')
+                    ->formatStateUsing(fn($state) => '$' . number_format($state / 100000, 2))
+                    ->sortable(),
                 TextColumn::make('balance_5d')
                     ->label('Balance')
                     ->formatStateUsing(fn($state) => '$' . number_format($state / 100000, 2))
                     ->sortable(),
-                TextColumn::make('status')->sortable(),
+
                 TextColumn::make('created_at')->dateTime()->label('Registered')->sortable(),
             ])
             ->filters([
@@ -105,12 +126,16 @@ class UserResource extends Resource
             //
         ];
     }
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
+            // 'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }

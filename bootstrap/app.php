@@ -14,6 +14,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Http\Middleware\StoreReferrerUrl::class,
+            \App\Http\Middleware\AffiliateTracking::class,
+        ]);
+        $middleware->validateCsrfTokens(except: [
+            'secure/data-api.php',
+        ]);
+        $middleware->alias([
+            'cms.auth' => \App\Http\Middleware\AuthenticateCmsApiToken::class,
+            'cms.scope' => \App\Http\Middleware\EnforceCmsApiScope::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

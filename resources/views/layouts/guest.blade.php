@@ -80,5 +80,36 @@
             @endsession
         @endforeach
 
+        {{-- Global Loading Overlay --}}
+        <div id="global-loader-overlay" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); z-index:99999; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+            <div style="width:48px; height:48px; border:4px solid #e2e8f0; border-top-color:#16a34a; border-radius:50%; animation:spin 1s linear infinite;"></div>
+            <span style="font-family:'figtree',sans-serif; font-size:16px; font-weight:600; color:#1f2937;">Processing, please wait...</span>
+        </div>
+
+        <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        </style>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('global-loader-overlay');
+
+            // Show loader for links with the 'show-loader' class
+            document.querySelectorAll('.show-loader').forEach(el => {
+                el.addEventListener('click', () => {
+                    if (loader) loader.style.display = 'flex';
+                });
+            });
+
+            // Show loader for standard form submissions
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', () => {
+                    if (loader) loader.style.display = 'flex';
+                });
+            });
+        });
+        </script>
     </body>
 </html>

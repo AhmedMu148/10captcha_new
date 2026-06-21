@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Affiliate;
+use App\Models\AffiliateRegisterRelation;
 use App\Models\UserDetail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cookie;
 
 class RegisteredUserController extends Controller
 {
@@ -32,7 +35,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'lowercase', 'email', 'max:50', 'unique:'.User::class],
+            'email'    => ['required', 'string', 'lowercase', 'email', 'max:50', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -46,6 +49,22 @@ class RegisteredUserController extends Controller
             'date'     => now(),
         ]);
 
+        $affiliateToken = Cookie::get('affiliate_token');
+
+        if ($affiliateToken) {
+
+            $affiliate = Affiliate::where('hash', $affiliateToken)
+                ->where('status', 'Approve')
+                ->first();
+
+            if ($affiliate) {
+
+                AffiliateRegisterRelation::create([
+                    'aff_id' => $affiliate->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
         // Detect country from IP
         $country = $this->resolveCountry($request);
 

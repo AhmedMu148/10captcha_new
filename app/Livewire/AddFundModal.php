@@ -185,8 +185,8 @@ class AddFundModal extends Component
                 'gateway' => $gatewayInfo['name'] ?? 'central_payment',
                 'payment_provider' => 'central_payment',
                 'payment_reference' => $transactionId,
-                'status' => 0,  // 0 = uncompleted/pending
-                'amount' => (float) $amountFormatted,  // stored x100000
+                'status' => 0,
+                'amount' => (float) $amountFormatted,  
                 'currency' => $this->currency,
                 'description' => 'Account top-up',
                 'metadata' => [

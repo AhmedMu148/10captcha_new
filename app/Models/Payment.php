@@ -38,6 +38,20 @@ class Payment extends Model
         };
     }
 
+    public function statusColor(): string
+    {
+        return match ((int) $this->status) {
+            1 => '#16a34a', // green
+            2 => '#dc2626', // red
+            default => '#eab308', // yellow
+        };
+    }
+
+    public function getAmount5dAttribute()
+    {
+        return $this->amount;
+    }
+
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class);

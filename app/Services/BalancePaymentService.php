@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\PymEvent;
 use App\Models\Payment;
+use App\Models\AffiliateRegisterRelation;
+use App\Models\AffiliateRelation;
 use App\Models\User;
 use App\Support\Payments\PaymentProviderResolver;
 use Illuminate\Database\Eloquent\Builder;
@@ -69,6 +71,24 @@ class BalancePaymentService
     {
         if ($amount <= 0) {
             throw new InvalidArgumentException('Amount must be positive');
+        }
+        $uid = $user->id;
+        $affiliateRegisterRelation = AffiliateRegisterRelation::where('user_id', $uid);
+        if ($affiliateRegisterRelation) {
+            $payments = Payment::where('user_id', $uid)->count();
+            if ($payments == 1) {
+                $aff_id   = $affiliateRegisterRelation['aff_id'];
+                $percent    = 10;
+                $end_date   = gmdate('ymdHis', strtotime("+3 months"));
+                $x = [];
+                $x['aff_id']  = $aff_id;
+                $x['comm']    = $percent;
+                $x['status']  = 'Awaiting';
+                $x['end_date']= $end_date;
+                AffiliateRelation::updateOrCreate([
+                    'user_id' => $uid,
+                ], $x);
+            }
         }
 
         return DB::Payment(function () use ($user, $amount, $description) {
@@ -262,7 +282,6 @@ class BalancePaymentService
             }
 
             $existingRefund = Payment::query()
-                ->whereNull('order_id')
                 ->where('type', 'refund')
                 ->where('payment_provider', 'central_payment')
                 ->where(function (Builder $query) use ($identities, $PaymentHash): void {

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'ocr_cap_id',

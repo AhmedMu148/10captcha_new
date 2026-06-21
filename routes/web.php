@@ -3,8 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TicketSupportController;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AffiliateController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ApiPageController;
@@ -12,10 +11,11 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\CustomImageController;
 use App\Http\Controllers\WalletController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 Route::get('/api-docs', [ApiPageController::class, 'docs'])->name('api.docs');
 Route::get('/tos', fn() => view('tos'))->name('tos');
@@ -47,11 +47,32 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tickets/sso', [TicketSupportController::class, 'sso'])
         ->name('ticket.sso.redirect');
-
-    // Ticket SSO: handle intended URL from ticket system.
     Route::get('/tickets/sso/intended', [TicketSupportController::class, 'handleIntended'])
         ->name('ticket.sso.intended');
+    Route::get('/tickets/new', [TicketSupportController::class, 'newTicket'])
+        ->name('ticket.new');
+    Route::post('/tickets/store', [TicketSupportController::class, 'store'])
+        ->name('ticket.store');
 
+
+    Route::get('/partnership', [AffiliateController::class, 'partnership'])->name('partnership');
+    Route::post('/partnership/store', [AffiliateController::class, 'partnershipStore'])->name('partnership.store');
+    Route::get('/partnership-option', [AffiliateController::class, 'partnershipOption'])->name('partnership.option');
+    Route::post('/option/store', [AffiliateController::class, 'optionStore'])->name('option.store');
+    Route::get('/partnership-register-relation', [AffiliateController::class, 'registerRelation'])->name('partnership.register-relation');
+    Route::get('/partnership-withdraw', [AffiliateController::class, 'withdraws'])->name('affiliate.withdraws');
+    Route::post('/withdraw/store', [AffiliateController::class, 'withdrawStore'])->name('withdraw.store');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+// Block-Based CMS Public Routes
+use App\Http\Controllers\CmsPageController;
+
+Route::get('/pages/{slug}', [CmsPageController::class, 'show'])
+    ->where('slug', '[A-Za-z0-9\-]+')
+    ->name('cms.page.show');
+
+Route::fallback([CmsPageController::class, 'showAtRoot'])
+    ->name('cms.page.fallback');
+

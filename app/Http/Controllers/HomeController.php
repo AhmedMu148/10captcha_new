@@ -9,10 +9,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $homeFaqs = Faq::whereRaw("FIND_IN_SET(1, `show`)")->where('status', 1)->get();
-        $plans = Plan::where('status', 1)->orderBy('sort')->get();
+        $homeFaqs = Faq::where('status', 'Active')->get();
+        $plans = Plan::where('status', 'Active')->orderBy('sort')->get();
 
         return view('welcome', compact('homeFaqs', 'plans'));
     }
 }
-

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('success');
             $table->integer('speed');
             $table->integer('sort');
-            $table->integer('status');
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
         });
     }
 

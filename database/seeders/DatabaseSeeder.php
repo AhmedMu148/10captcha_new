@@ -15,10 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminUserSeeder::class);
         $this->call(PlanSeeder::class);
         $this->call(CustomImageSeeder::class);
-
-
-
-
-
+        $this->call(ThreadSeeder::class);
+        $this->call(SiteMapSeeder::class);
     }
 }

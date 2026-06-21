@@ -24,4 +24,18 @@ class VerifyEmailController extends Controller
 
         return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
     }
+
+    /**
+     * Send a verification email and redirect back to the dashboard with a success message.
+     */
+    public function send(\Illuminate\Http\Request $request): RedirectResponse
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('dashboard');
+        }
+
+        $request->user()->sendEmailVerificationNotification();
+
+        return redirect()->route('dashboard')->with('success', 'We have sent a verification link to your email address: ' . $request->user()->email);
+    }
 }

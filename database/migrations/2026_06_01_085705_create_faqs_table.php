@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('faqs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('lang_id');
             $table->unsignedBigInteger('cat_id');
             $table->string('question');
             $table->text('answer');
-            $table->string('show')->default('1');
-            $table->boolean('status')->default(1);
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->timestamps();
         });
     }

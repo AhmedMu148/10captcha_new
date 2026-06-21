@@ -51,4 +51,14 @@ return [
         'verify_ssl' => env('CENTRAL_PAYMENT_VERIFY_SSL', true),
     ],
 
+    'ocr' => [
+        'api_key' => env('OCR_API_KEY'),
+        'default_price' => env('OCR_DEFAULT_PRICE'),
+        'secure_api_key' => env('OCR_SECURE_API_KEY'),
+    ],
+
+    'custom_image_api' => [
+        'url' => env('CUSTOM_IMAGE_API_URL'),
+        'key' => env('CUSTOM_IMAGE_API_KEY'),
+    ],
 ];
